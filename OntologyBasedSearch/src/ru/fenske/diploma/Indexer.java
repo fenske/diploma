@@ -106,7 +106,7 @@ public class Indexer {
 	
 	public static Indexer getInstance() throws OWLOntologyCreationException {
 		if (instance == null) {
-			instance = new Indexer("file:///D:/Anton/diploma/ontology/ontology.owl");
+			instance = new Indexer("file:///D:/Soft/web_eclipse/ontology/doc.owl");
 		}
 		return instance;
 	}
