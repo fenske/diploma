@@ -1,4 +1,1 @@
-diploma
-=======
-
-diploma
+This is a project description
