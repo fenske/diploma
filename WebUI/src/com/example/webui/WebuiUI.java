@@ -1,11 +1,18 @@
 package com.example.webui;
 
+import java.sql.SQLException;
+
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import ru.fenske.diploma.Indexer;
+import ru.fenske.diploma.MainComposite;
+
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+
 
 /**
  * Main UI class
@@ -15,17 +22,43 @@ public class WebuiUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		final VerticalLayout layout = new VerticalLayout();
-		layout.setMargin(true);
-		setContent(layout);
-
-		Button button = new Button("Click Me");
-		button.addClickListener(new Button.ClickListener() {
+		final MainComposite mainComposite = new MainComposite();
+		setContent(mainComposite);
+		mainComposite.getButtonSynchronizer().addClickListener(new ClickListener() {
+			
+			@Override
 			public void buttonClick(ClickEvent event) {
-				layout.addComponent(new Label("Thank you for clicking"));
+				Indexer indexer = null;
+				try {
+					indexer = Indexer.getInstance();
+				} catch (OWLOntologyCreationException e) {
+					System.err.println(e);
+				}
+				if (indexer != null) {					
+					try {
+						indexer.indexDocuments();
+					} catch (OWLOntologyCreationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (OWLOntologyStorageException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
+				}
 			}
 		});
-		layout.addComponent(button);
+	}
+	
+	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, SQLException, ClassNotFoundException {
+		Indexer indexer = Indexer.getInstance();
+		indexer.indexDocuments();
+		System.out.println();
 	}
 
 }

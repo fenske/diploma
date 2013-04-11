@@ -19,5 +19,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=WebUI&amp;ivyXmlPath=ivy.xml&amp;confs=widgetset-compile&amp;ivySettingsPath=%24%7Bworkspace_loc%3AWebUI%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;propertyFiles="/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/HermiT.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/owlapi-api-3.4.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/owlapi-apibinding-3.4.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/owlapi-contract-3.4.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/owlapi-impl-3.4.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/owlapi-parsers-3.4.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/owlapi-tools-3.4.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/postgresql-9.2-1002.jdbc4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/SearchAPI.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
