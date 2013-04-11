@@ -48,7 +48,7 @@ public class Indexer {
 		dataFactory = OWLManager.getOWLDataFactory();
 	}
 	
-	public void indexDocuments() throws OWLOntologyCreationException, SQLException, OWLOntologyStorageException {		
+	public void indexDocuments() throws OWLOntologyCreationException, SQLException, OWLOntologyStorageException, ClassNotFoundException {		
 		OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
 		ConsoleProgressMonitor progressMonitor = new ConsoleProgressMonitor();
 		OWLReasonerConfiguration config = new SimpleConfiguration(progressMonitor);
@@ -80,11 +80,12 @@ public class Indexer {
 		ontologyManager.saveOntology(ontology, IRI.create(ontologyIRI));
 	}
 	
-	private List<Document> getDocumentList() throws SQLException {
+	private List<Document> getDocumentList() throws SQLException, ClassNotFoundException {
 		String url = "jdbc:postgresql://localhost:5432/enterprise";;
 		Properties properties = new Properties();
 		properties.setProperty("user", "postgres");
-		properties.setProperty("password", "1234");	
+		properties.setProperty("password", "1234");
+		Class.forName("org.postgresql.Driver");
 		Connection connection = DriverManager.getConnection(url, properties);
 		try {
 			Statement select = connection.createStatement();
@@ -109,11 +110,5 @@ public class Indexer {
 			instance = new Indexer("file:///D:/Soft/web_eclipse/ontology/doc.owl");
 		}
 		return instance;
-	}
-	
-	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, SQLException {
-		Indexer i = Indexer.getInstance();
-		i.indexDocuments();
-		
 	}
 }
