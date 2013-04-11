@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY doc2 "file:///D:/Soft/web_eclipse/ontology/doc.owl#" >
+    <!ENTITY wine "http://www.w3.org/TR/2003/PR-owl-guide-20031209/wine#" >
+    <!ENTITY food "http://www.w3.org/TR/2003/PR-owl-guide-20031209/food#" >
+    <!ENTITY mainOntology "http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#" >
+    <!ENTITY doc "file:///D:/Soft/web_eclipse/workspace/Annotator/resources/doc.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/fenske/ontologies/2013/2/untitled-ontology-15#"
+     xml:base="http://www.semanticweb.org/fenske/ontologies/2013/2/untitled-ontology-15"
+     xmlns:wine="http://www.w3.org/TR/2003/PR-owl-guide-20031209/wine#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:food="http://www.w3.org/TR/2003/PR-owl-guide-20031209/food#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:doc="file:///D:/Soft/web_eclipse/workspace/Annotator/resources/doc.owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:mainOntology="http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#"
+     xmlns:doc2="file:///D:/Soft/web_eclipse/ontology/doc.owl#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology">
+        <owl:imports rdf:resource="http://www.w3.org/TR/2003/PR-owl-guide-20031209/food"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#cAnnotationRef -->
+
+    <owl:ObjectProperty rdf:about="&mainOntology;cAnnotationRef">
+        <rdfs:range rdf:resource="&mainOntology;Annotation"/>
+        <owl:inverseOf rdf:resource="&mainOntology;conceptRef"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#conceptRef -->
+
+    <owl:ObjectProperty rdf:about="&mainOntology;conceptRef"/>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#dAnnotationRef -->
+
+    <owl:ObjectProperty rdf:about="&mainOntology;dAnnotationRef">
+        <rdfs:range rdf:resource="&mainOntology;Document"/>
+        <owl:inverseOf rdf:resource="&mainOntology;documentRef"/>
+        <rdfs:domain rdf:resource="&owl;Thing"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#documentRef -->
+
+    <owl:ObjectProperty rdf:about="&mainOntology;documentRef">
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- file:///D:/Soft/web_eclipse/ontology/doc.owl#author -->
+
+    <owl:DatatypeProperty rdf:about="&doc2;author"/>
+    
+
+
+    <!-- file:///D:/Soft/web_eclipse/ontology/doc.owl#name -->
+
+    <owl:DatatypeProperty rdf:about="&doc2;name"/>
+    
+
+
+    <!-- file:///D:/Soft/web_eclipse/ontology/doc.owl#uri -->
+
+    <owl:DatatypeProperty rdf:about="&doc2;uri"/>
+    
+
+
+    <!-- file:///D:/Soft/web_eclipse/workspace/Annotator/resources/doc.owl#weight -->
+
+    <owl:DatatypeProperty rdf:about="&doc;weight">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#author -->
+
+    <owl:DatatypeProperty rdf:about="&mainOntology;author">
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#name -->
+
+    <owl:DatatypeProperty rdf:about="&mainOntology;name"/>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#uri -->
+
+    <owl:DatatypeProperty rdf:about="&mainOntology;uri"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- file:///D:/Soft/web_eclipse/ontology/doc.owl#Document -->
+
+    <owl:Class rdf:about="&doc2;Document"/>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#Annotation -->
+
+    <owl:Class rdf:about="&mainOntology;Annotation">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&mainOntology;documentRef"/>
+                <owl:onClass rdf:resource="&mainOntology;Document"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&mainOntology;conceptRef"/>
+                <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#Document -->
+
+    <owl:Class rdf:about="&mainOntology;Document">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&mainOntology;author"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&mainOntology;name"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&mainOntology;dAnnotationRef"/>
+                <owl:allValuesFrom rdf:resource="&mainOntology;Annotation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&mainOntology;uri"/>
+                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
