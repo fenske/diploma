@@ -14,6 +14,7 @@ import ru.fenske.diploma.MainComposite;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 
@@ -38,21 +39,24 @@ public class WebuiUI extends UI {
 					System.err.println(e);
 				}
 				if (indexer != null) {					
-					try {
-						indexer.indexDocuments();
-					} catch (OWLOntologyCreationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OWLOntologyStorageException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}					
+//					try {
+//						indexer.indexDocuments();
+//					} catch (OWLOntologyCreationException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (OWLOntologyStorageException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (SQLException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (ClassNotFoundException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+					Notification.show("Синхронизация с базой данных выполнена успешно");
+				} else {
+					Notification.show("В процессе синхронизации с базой данных возникли ошибки", Notification.TYPE_ERROR_MESSAGE);
 				}
 			}
 		});
@@ -67,32 +71,29 @@ public class WebuiUI extends UI {
 					System.err.println(e);
 				}
 				if (annotator != null) {						
-					try {
-						annotator.annotateDocuments();
-						System.out.println("Well done");
-					} catch (OWLOntologyCreationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (OWLOntologyStorageException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (URISyntaxException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}					
+//					try {
+//						annotator.annotateDocuments();
+//						System.out.println("Well done");
+//					} catch (OWLOntologyCreationException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (OWLOntologyStorageException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (URISyntaxException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}	
+					Notification.show("Аннотирование выполнено успешно");
+				} else {
+					Notification.show("В процессе аннотирования возникли ошибки", Notification.TYPE_ERROR_MESSAGE);
 				}
 				
 			}
 		});
-	}
-	
-	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, SQLException, ClassNotFoundException, IOException, URISyntaxException {
-		Annotator annotator = Annotator.getInstance();
-		annotator.annotateDocuments();
-		System.out.println();
 	}
 
 }
