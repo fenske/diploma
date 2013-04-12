@@ -1,10 +1,13 @@
 package com.example.webui;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
+import ru.fenske.diploma.Annotator;
 import ru.fenske.diploma.Indexer;
 import ru.fenske.diploma.MainComposite;
 
@@ -53,11 +56,42 @@ public class WebuiUI extends UI {
 				}
 			}
 		});
+		mainComposite.getButtonAnnotator().addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Annotator annotator = null;
+				try {
+					annotator = Annotator.getInstance();
+				} catch (OWLOntologyCreationException e) {
+					System.err.println(e);
+				}
+				if (annotator != null) {						
+					try {
+						annotator.annotateDocuments();
+						System.out.println("Well done");
+					} catch (OWLOntologyCreationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (OWLOntologyStorageException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
+				}
+				
+			}
+		});
 	}
 	
-	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, SQLException, ClassNotFoundException {
-		Indexer indexer = Indexer.getInstance();
-		indexer.indexDocuments();
+	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, SQLException, ClassNotFoundException, IOException, URISyntaxException {
+		Annotator annotator = Annotator.getInstance();
+		annotator.annotateDocuments();
 		System.out.println();
 	}
 
