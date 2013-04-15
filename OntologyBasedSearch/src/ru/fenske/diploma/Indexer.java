@@ -54,16 +54,16 @@ public class Indexer {
 		OWLReasonerConfiguration config = new SimpleConfiguration(progressMonitor);
 		OWLReasoner reasoner = reasonerFactory.createReasoner(ontology, config);
 		reasoner.precomputeInferences();
-		OWLClass documentClass = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#Document"));					
+		OWLClass documentClass = OWLUtils.getOntologyClass(ontology, Fragments.DOCUMENT_CLASS);//dataFactory.getOWLClass(IRI.create(ontologyIRI + "#Document"));					
 		Set<OWLNamedIndividual> documentIndividuals = reasoner.getInstances(documentClass, false).getFlattened();
 		List<String> documentIndividualsNames = new ArrayList<String>();
 		for (OWLNamedIndividual i : documentIndividuals) {
 			documentIndividualsNames.add(i.getIRI().getFragment());
 		}		
 		List<Document> dbDocumentList = getDocumentList();
-		OWLDataProperty name = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#name"));
-		OWLDataProperty author = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#author"));
-		OWLDataProperty uri = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#uri"));
+		OWLDataProperty name = OWLUtils.getOntologyDataProperty(ontology, Fragments.NAME_PROPERTY);//dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#name"));
+		OWLDataProperty author = OWLUtils.getOntologyDataProperty(ontology, Fragments.AUTHOR_PROPERTY);//dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#author"));
+		OWLDataProperty uri = OWLUtils.getOntologyDataProperty(ontology, Fragments.URI_PROPERTY);//dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#uri"));
 		
 		for (Document d : dbDocumentList) {
 			if (!documentIndividualsNames.contains(d.getName())) {
@@ -110,5 +110,10 @@ public class Indexer {
 			instance = new Indexer("file:///D:/Soft/web_eclipse/ontology/doc.owl");
 		}
 		return instance;
+	}
+	
+	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, ClassNotFoundException, SQLException {
+		Indexer indexer = Indexer.getInstance();
+		indexer.indexDocuments();
 	}
 }

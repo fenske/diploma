@@ -101,31 +101,11 @@
     
 
 
-    <!-- file:///D:/Soft/web_eclipse/ontology/doc.owl#uri -->
-
-    <owl:DatatypeProperty rdf:about="&doc2;uri"/>
-    
-
-
     <!-- file:///D:/Soft/web_eclipse/workspace/Annotator/resources/doc.owl#weight -->
 
     <owl:DatatypeProperty rdf:about="&doc;weight">
         <rdf:type rdf:resource="&owl;FunctionalProperty"/>
     </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#author -->
-
-    <owl:DatatypeProperty rdf:about="&mainOntology;author">
-        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#name -->
-
-    <owl:DatatypeProperty rdf:about="&mainOntology;name"/>
     
 
 
@@ -143,12 +123,6 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
-    
-
-
-    <!-- file:///D:/Soft/web_eclipse/ontology/doc.owl#Document -->
-
-    <owl:Class rdf:about="&doc2;Document"/>
     
 
 
@@ -175,20 +149,6 @@
     <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#Document -->
 
     <owl:Class rdf:about="&mainOntology;Document">
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&mainOntology;author"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&mainOntology;name"/>
-                <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onDataRange rdf:resource="&xsd;string"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="&mainOntology;dAnnotationRef"/>
