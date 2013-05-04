@@ -261,19 +261,19 @@ public class Annotator {
 //	}
 //	
 //
-	public static void main(String[] args) throws Exception {				
-		
-		Annotator annotator = Annotator.getInstance();
-		long start = System.currentTimeMillis();
-		
-		annotator.annotateDocuments();
-		
-		long stop = System.currentTimeMillis();		
-		double resultTime = (double)((stop - start)) / 1000;
-		
-		System.out.println("Well done!");
-		System.out.println("Working time: " + resultTime);
-//		annotator.temp();
-		
-	}
+//	public static void main(String[] args) throws Exception {				
+//		
+//		Annotator annotator = Annotator.getInstance();
+//		long start = System.currentTimeMillis();
+//		
+//		annotator.annotateDocuments();
+//		
+//		long stop = System.currentTimeMillis();		
+//		double resultTime = (double)((stop - start)) / 1000;
+//		
+//		System.out.println("Well done!");
+//		System.out.println("Working time: " + resultTime);
+////		annotator.temp();
+//		
+//	}
 }
