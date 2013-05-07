@@ -45,8 +45,8 @@ public class Retreiver {
 	public Map<Double, OWLNamedIndividual> retreiveDocuments(String query) throws OWLOntologyCreationException {
 		Set<OWLNamedIndividual> documentSet = new HashSet<OWLNamedIndividual>();
 		List<String> queryList = Arrays.asList(query.toLowerCase().split("\\W"));
-		OWLObjectProperty cAnnotationRefProperty = OWLUtils.getOntologyObjectProperty(ontology, "cAnnotationRef");
-		OWLObjectProperty documentRefProperty = OWLUtils.getOntologyObjectProperty(ontology, "documentRef");
+		OWLObjectProperty cAnnotationRefProperty = OWLUtils.getOntologyObjectProperty(ontology, Fragments.C_ANNOTATION_REF_PROPERTY);
+		OWLObjectProperty documentRefProperty = OWLUtils.getOntologyObjectProperty(ontology, Fragments.DOCUMENT_REF_PROPERTY);
 		ReasonerFactory reasonerFactory = new ReasonerFactory();
 		OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
 		List<OWLNamedIndividual> queryOntList = new ArrayList<OWLNamedIndividual>();
@@ -95,15 +95,15 @@ public class Retreiver {
 			queryVector[index] = true;
 			matches++;
 		}		
-		OWLObjectProperty dAnnotationRefProp = OWLUtils.getOntologyObjectProperty(ontology, "dAnnotationRef");
-		OWLDataProperty weightProp = OWLUtils.getOntologyDataProperty(ontology, "weight");
+		OWLObjectProperty dAnnotationRefProp = OWLUtils.getOntologyObjectProperty(ontology, Fragments.D_ANNOTATION_REF_PROPERTY);
+		OWLDataProperty weightProp = OWLUtils.getOntologyDataProperty(ontology, Fragments.WEIGHT_PROPERTY);
 		Map<Double, OWLNamedIndividual> rangedDocMap = new TreeMap<Double, OWLNamedIndividual>(new Comparator<Double>() {
 			@Override
 		    public int compare(Double o1, Double o2) {
 		    	return o2.compareTo(o1);
 		    }
 		});
-		OWLObjectProperty conceptRefProp = OWLUtils.getOntologyObjectProperty(ontology, "conceptRef");
+		OWLObjectProperty conceptRefProp = OWLUtils.getOntologyObjectProperty(ontology, Fragments.CONCEPT_REF_PROPERTY);
 		for (OWLNamedIndividual document : documentSet) {
 			Set<OWLNamedIndividual> docAnnotations = reasoner.getObjectPropertyValues(document, dAnnotationRefProp).getFlattened();			
 			int[] docVector = new int[ontInstances.size()]; 

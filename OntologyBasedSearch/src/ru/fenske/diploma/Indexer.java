@@ -112,8 +112,8 @@ public class Indexer {
 		return instance;
 	}
 	
-	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, ClassNotFoundException, SQLException {
-		Indexer indexer = Indexer.getInstance();
-		indexer.indexDocuments();
-	}
+//	public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException, ClassNotFoundException, SQLException {
+//		Indexer indexer = Indexer.getInstance();
+//		indexer.indexDocuments();
+//	}
 }
