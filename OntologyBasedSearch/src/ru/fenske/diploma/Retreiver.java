@@ -55,6 +55,7 @@ public class Retreiver {
 			if (i == null) {
 				break;
 			} else {
+				// TODO : Проверить на принадлежность к атрибутам документа
 				queryOntList.add(i);
 				Set<OWLNamedIndividual> annotationSet = reasoner.getObjectPropertyValues(i, cAnnotationRefProperty).getFlattened();
 				for (OWLNamedIndividual annotation : annotationSet) {
@@ -75,6 +76,7 @@ public class Retreiver {
 					}
 				}
 				// Add additional links
+				// TODO : Исключить те экземпляры, которые относятся к классу Annotation и Document
 				Set<OWLNamedIndividual> relatedIndividuals = OWLUtils.getRelatedIndividuals(ontology, i);
 				for (OWLNamedIndividual relInd : relatedIndividuals) {
 					Set<OWLNamedIndividual> relatedAnnotationSet = reasoner.getObjectPropertyValues(relInd, documentRefProperty).getFlattened();

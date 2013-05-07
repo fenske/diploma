@@ -1,11 +1,6 @@
 package com.example.webui;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
-
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 import ru.fenske.diploma.Annotator;
 import ru.fenske.diploma.Indexer;
