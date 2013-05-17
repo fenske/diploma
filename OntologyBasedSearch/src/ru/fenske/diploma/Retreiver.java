@@ -1,7 +1,9 @@
 package ru.fenske.diploma;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -25,6 +28,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.util.AutoIRIMapper;
 
 
+
 public class Retreiver {
 
 	private static Retreiver instance;
@@ -33,14 +37,25 @@ public class Retreiver {
 	private OWLOntology ontology;
 	private OWLDataFactory dataFactory;
 	private String ontologyIRI;
+	private ReasonerFactory reasonerFactory;
+	private OWLReasoner reasoner; 
 	
 	private Retreiver(String ontologyIRI) throws OWLOntologyCreationException {
 		this.ontologyIRI = ontologyIRI;		
 		ontologyManager = OWLManager.createOWLOntologyManager();
 		ontologyManager.addIRIMapper(new AutoIRIMapper(new File(""), true));		 
-		ontology = ontologyManager.loadOntologyFromOntologyDocument(IRI.create(ontologyIRI));		 
+		ontology = ontologyManager.loadOntologyFromOntologyDocument(IRI.create(ontologyIRI));		
 		dataFactory = OWLManager.getOWLDataFactory();
+		reasonerFactory = new ReasonerFactory();
+		reasoner = reasonerFactory.createReasoner(ontology);		
 	}
+	
+	public void populateOntologyData() {
+		Set<OWLNamedIndividual> individuals = reasoner.getInstances(dataFactory.getOWLThing(), false).getFlattened();
+		List<OWLNamedIndividual> indList = new ArrayList<OWLNamedIndividual>();
+		indList.addAll(individuals);
+	}
+	
 	
 	public Map<Double, OWLNamedIndividual> retreiveDocuments(String query) throws OWLOntologyCreationException {
 		Set<OWLNamedIndividual> documentSet = new HashSet<OWLNamedIndividual>();
@@ -49,20 +64,21 @@ public class Retreiver {
 		OWLObjectProperty documentRefProperty = OWLUtils.getOntologyObjectProperty(ontology, Fragments.DOCUMENT_REF_PROPERTY);
 		ReasonerFactory reasonerFactory = new ReasonerFactory();
 		OWLReasoner reasoner = reasonerFactory.createReasoner(ontology);
+		
 		List<OWLNamedIndividual> queryOntList = new ArrayList<OWLNamedIndividual>();
 		for (String s : queryList) {
-			OWLNamedIndividual i = OWLUtils.getOntologyInstance(ontology, dataFactory.getOWLThing(), s);
+			OWLNamedIndividual i = OWLUtils.getOntologyInstance(ontology, dataFactory.getOWLThing(), s);	//very slow...
 			if (i == null) {
-				break;
+				continue;
 			} else {
 				// TODO : Проверить на принадлежность к атрибутам документа
 				queryOntList.add(i);
-				Set<OWLNamedIndividual> annotationSet = reasoner.getObjectPropertyValues(i, cAnnotationRefProperty).getFlattened();
+				Set<OWLNamedIndividual> annotationSet = reasoner.getObjectPropertyValues(i, cAnnotationRefProperty).getFlattened();	// slow
 				for (OWLNamedIndividual annotation : annotationSet) {
 					documentSet.addAll(reasoner.getObjectPropertyValues(annotation, documentRefProperty).getFlattened());
 				}
 				// Add relashionship links
-				Set<OWLClass> typeSet = reasoner.getTypes(i, true).getFlattened();
+				Set<OWLClass> typeSet = reasoner.getTypes(i, true).getFlattened();	//slow
 				for (OWLClass c : typeSet) {
 					Set<OWLClass> subclassSet = reasoner.getSubClasses(c, false).getFlattened();
 					for (OWLClass subclass : subclassSet) {
@@ -139,25 +155,49 @@ public class Retreiver {
 	
 	public static Retreiver getInstance() throws OWLOntologyCreationException {
 		if (instance == null) {
-			instance = new Retreiver("file:///D:/Anton/diploma/ontology/doc.owl");
+			instance = new Retreiver("file:///C:/Users/fenske.DIT/repository/diploma/OntologyBasedSearch/resources/doc.owl");
 		}
 		return instance;
-	}	
+	}
 	
-//	public static void main(String[] args) throws OWLOntologyCreationException {
-//		Retreiver r = Retreiver.getInstance();
-//		//Set<OWLNamedIndividual> set = r.retreiveDocuments("vEAL tUnA");
-////		long start = System.currentTimeMillis();
-////		Map<Double, OWLNamedIndividual> documents = r.retreiveDocuments("vEAL tUnA");
-////		Iterator<Map.Entry<Double, OWLNamedIndividual>> iterator = documents.entrySet().iterator();
-////		while (iterator.hasNext()) {
-////			Map.Entry<Double, OWLNamedIndividual> pairs = iterator.next();
-////			System.out.println(pairs.getValue().getIRI().getFragment());
-////		}
-////		long stop = System.currentTimeMillis();
-////		System.out.println("Total time: " + ((double)stop / (double)start) / 100);
-////		for (OWLNamedIndividual i : set) {
-////			System.out.println(i.getIRI().getFragment());
-////		}
-//	}
+	
+
+	public OWLOntology getOntology() {
+		return ontology;
+	}
+
+	
+	public List<OWLEntity> getOWLEntities(String fragment, String owlClass) {
+		List<OWLEntity> necessaryEntities = new ArrayList<OWLEntity>();				
+		for (OWLOntology o : ontology.getImports()) {		
+			Set<OWLEntity> entitySet = o.getEntitiesInSignature(IRI.create(o.getOntologyID().getOntologyIRI() + "#" + fragment));			
+			if (entitySet.size() != 0) {
+				OWLEntity entity = entitySet.iterator().next();
+				if (entity.getEntityType().getName().equals(owlClass)) {
+					necessaryEntities.add(entity);				
+				}
+			}			
+		}		
+		return necessaryEntities;
+	}
+
+	public static void main(String[] args) throws OWLOntologyCreationException {
+		Retreiver r = Retreiver.getInstance();		
+		OWLOntology systemOntology = r.getOntology();
+		Set<OWLOntology> ontSet = systemOntology.getImports();
+		r.getOWLEntities("Cake", OWLTypes.OWL_INDIVIDUAL);
+//		long start = System.currentTimeMillis();
+//		Map<Double, OWLNamedIndividual> documents = r.retreiveDocuments("vEAL tUnA");
+//		Iterator<Map.Entry<Double, OWLNamedIndividual>> iterator = documents.entrySet().iterator();
+//		while (iterator.hasNext()) {
+//			Map.Entry<Double, OWLNamedIndividual> pairs = iterator.next();
+//			System.out.println(pairs.getValue().getIRI().getFragment());
+//		}
+//		long stop = System.currentTimeMillis();
+//		System.out.println("Total time: " + ((double)stop / (double)start) / 100);
+//		for (OWLNamedIndividual i : set) {
+//			System.out.println(i.getIRI().getFragment());
+//		}
+	}
+	
 }

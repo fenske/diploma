@@ -151,18 +151,37 @@
     <owl:Class rdf:about="&mainOntology;Document">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="&mainOntology;dAnnotationRef"/>
-                <owl:allValuesFrom rdf:resource="&mainOntology;Annotation"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="&mainOntology;uri"/>
                 <owl:qualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:qualifiedCardinality>
                 <owl:onDataRange rdf:resource="&xsd;string"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&mainOntology;dAnnotationRef"/>
+                <owl:allValuesFrom rdf:resource="&mainOntology;Annotation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/fenske/ontologies/2013/2/mainOntology#qwerty -->
+
+    <owl:NamedIndividual rdf:about="&mainOntology;qwerty">
+        <rdf:type rdf:resource="&mainOntology;Document"/>
+    </owl:NamedIndividual>
 </rdf:RDF>
 
 
