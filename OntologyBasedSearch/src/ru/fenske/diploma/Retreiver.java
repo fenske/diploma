@@ -168,6 +168,8 @@ public class Retreiver {
 
 	
 	public List<OWLEntity> getOWLEntities(String fragment, String owlClass) {
+		StringBuilder sb = new StringBuilder(fragment.toLowerCase());		
+		sb.setCharAt(0, Character.toUpperCase(fragment.charAt(0)));
 		List<OWLEntity> necessaryEntities = new ArrayList<OWLEntity>();				
 		for (OWLOntology o : ontology.getImports()) {		
 			Set<OWLEntity> entitySet = o.getEntitiesInSignature(IRI.create(o.getOntologyID().getOntologyIRI() + "#" + fragment));			
@@ -181,11 +183,11 @@ public class Retreiver {
 		return necessaryEntities;
 	}
 
-	public static void main(String[] args) throws OWLOntologyCreationException {
+	public static void main(String[] args) throws OWLOntologyCreationException {	
 		Retreiver r = Retreiver.getInstance();		
 		OWLOntology systemOntology = r.getOntology();
 		Set<OWLOntology> ontSet = systemOntology.getImports();
-		r.getOWLEntities("Cake", OWLTypes.OWL_INDIVIDUAL);
+		System.out.println(r.getOWLEntities("SweetDessert", OWLTypes.OWL_CLASS));
 //		long start = System.currentTimeMillis();
 //		Map<Double, OWLNamedIndividual> documents = r.retreiveDocuments("vEAL tUnA");
 //		Iterator<Map.Entry<Double, OWLNamedIndividual>> iterator = documents.entrySet().iterator();

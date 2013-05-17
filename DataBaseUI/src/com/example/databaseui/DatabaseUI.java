@@ -1,16 +1,14 @@
 package com.example.databaseui;
 
-import java.sql.SQLException;
-
 import ru.fenske.diploma.DataBaseComposite;
 import ru.fenske.diploma.DbUtils;
 import ru.fenske.diploma.Document;
 
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 /**

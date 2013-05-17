@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1368713135455" name="http://www.semanticweb.org/fenske/ontologies/2013/2/untitled-ontology-15" uri="doc.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1368713135455" name="http://www.w3.org/TR/2003/PR-owl-guide-20031209/food" uri="food.owl"/>
+    </group>
+</catalog>
